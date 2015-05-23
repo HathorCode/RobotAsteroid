@@ -68,7 +68,7 @@ namespace robitRabit {
 			handle = CreateWindowEx(0,
 			                        mainWndClass.lpszClassName,
 			                        "RobitRabit",
-									WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME,
+									WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,
 									0,
 									0,
 									1650,
