@@ -23,6 +23,11 @@ namespace robitRabit {
 			matrix = rotMatrix * matrix;
 		}
 
+		void Scale(float32 x, float32 y) {
+			matrix[0][0] *= x;
+			matrix[1][0] *= y;
+		}
+
 		void SetIdentity() {
 			matrix = glm::mat3(1.0f, 0.0f, 0.0f,
 			                   0.0f, 1.0f, 0.0f,
