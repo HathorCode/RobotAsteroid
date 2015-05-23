@@ -3,7 +3,10 @@
 */
 
 #pragma once
+#include <engine/renderer/Sprite.hpp>
 
 namespace robitRabit {
-	
+	struct {
+		Sprite background;
+	} assets;
 }
