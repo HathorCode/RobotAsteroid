@@ -4,8 +4,14 @@
 
 #pragma once
 
+#define maxWorkaround(a,b) (((a) > (b)) ? (a) : (b))
+
+#include <algorithm>
+#include <platform\windows\Log.hpp>
+
 #include <ft2build.h>
 #include FT_FREETYPE_H
+
 
 namespace robitRabit {
 	struct Font {
@@ -17,26 +23,38 @@ namespace robitRabit {
 		}
 
 		//Creates an atlas from the given font file.
-		uint32 Init(const uint8* fontFileData, const uintptr fileDataSize, const uint32 pxFontSize) {
+		uint32 Init(const char* pathToFont, const uint32 pxFontSize) {
 			assert(pxFontSize > 0);
-			assert(fontFileData);
-			assert(fileDataSize > 0);
+			assert(pathToFont);
 
 			FT_Face ftFont;
-			FT_Error e;
-			uint32 cmin = 0x21; //Minimum character glyph value to load
-			uint32 cmax = 0x7e; //Maximum character glyph value to load
-			e = FT_New_Memory_Face(ftLibrary,
-			                       fontFileData,
-			                       fileDataSize,
-			                       0,		  
-			                       &ftFont);
-			if (e) {return e;}
-			e = FT_Set_Pixel_Sizes(ftFont,
-			                       0,	
-			                       pxFontSize);
-			if (e) {return e;}
+			FT_Error error;
+			error = FT_New_Face(ftLibrary, pathToFont, 0, &ftFont);
+			if (error) { return error; }
+
+			error = FT_Set_Pixel_Sizes(ftFont, 0, pxFontSize);
+			if (error) { return error; }
+
+			FT_GlyphSlot glyphSlot = ftFont->glyph;
+
+			uint32 width = 0;
+			uint32 height = 0;
+			uint32 atlasWidth;
+
+			uint32 cmin = 0x20; //Minimum character glyph value to load
+			uint32 cmax = 0x81; //Maximum character glyph value to load
+			for (int charIterator = cmin; charIterator < cmax; charIterator++) {
+				if (FT_Load_Char(ftFont, charIterator, FT_LOAD_RENDER)) {
+					log.Write("[FreeType2] Character that should be acessible can't be loaded");
+				}
+
+				width += glyphSlot->bitmap.width;
+				height = maxWorkaround(height, glyphSlot->bitmap.rows);
+
+				atlasWidth = width;
+			}
 		}
+
 	private:
 		static FT_Library ftLibrary;
 		GLuint atlas;
