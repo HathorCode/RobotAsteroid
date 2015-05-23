@@ -17,7 +17,7 @@ namespace robitRabit {
 			
 			dcb.DCBlength = sizeof(DCB);
 			dcb.BaudRate = CBR_9600;
-			dcb.ByteSize = 10;
+			dcb.ByteSize = 8;
 			dcb.Parity = NOPARITY;
 			dcb.StopBits = ONESTOPBIT;
 			if (!SetCommState(dataHandle, &dcb)) {
@@ -26,12 +26,11 @@ namespace robitRabit {
 		}
 
 		inline void SendData(char* dataToSend) {
-			bool writtenFile = WriteFile(dataHandle, dataToSend, 6, &bytesWritten, NULL);
+			bool writtenFile = WriteFile(dataHandle, dataToSend, 1, &bytesWritten, NULL);
 		}
 
 		/* Should be the only function used to send instructions to the Carduino. Input the array of characters from the generated path*/
 		void SendInstructionSet(std::vector<char*> instructionVector) {
-			bool bufferSize = WriteFile(dataHandle, (LPCVOID)instructionVector.size(), sizeof(instructionVector.size()), &bytesWritten, NULL);
 			for (int indexOfBuffer = 0; indexOfBuffer < instructionVector.size(); indexOfBuffer++) {
 				SendData(instructionVector[indexOfBuffer]);
 			}
