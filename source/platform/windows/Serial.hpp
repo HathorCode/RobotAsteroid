@@ -18,7 +18,7 @@ namespace robitRabit {
 			dcb.ByteSize = 8;
 			dcb.Parity = NOPARITY;
 			dcb.StopBits = ONESTOPBIT;
-			assert(!SetCommState(dataHandle, &dcb));
+			//assert(!SetCommState(dataHandle, &dcb));
 		}
 
 		inline void SendData(char* dataToSend) {

@@ -17,6 +17,8 @@
 
 #include <engine/renderer/Font.hpp>
 
+#include <platform\windows\Serial.hpp>
+
 #include <Windows.h>
 
 namespace robitRabit {
@@ -71,7 +73,9 @@ int __stdcall WinMain(HINSTANCE paramHInstance, HINSTANCE hPrevInstance, LPSTR l
 							  "Try updating your graphics drivers.");
 		ExitProgram();
 	}
-	gl.Init();                                           
+	gl.Init();
+	serial.Init();
+	serial.SendData("werks"); // Remove in a sec
 	LoadFiles();
 	AppState();
 	//Never reached

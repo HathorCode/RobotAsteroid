@@ -4,6 +4,7 @@
 #pragma once
 #include "Log.hpp"
 #include <platform/Enum.hpp>
+#include <platform\windows\Serial.hpp>
 
 #include <Windows.h>
 
@@ -19,6 +20,7 @@ namespace robitRabit {
 #   define defWindowCallback(name) LRESULT __stdcall name(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	
 	void ExitProgram() {
+		robitRabit::serial.Close();
 		robitRabit::log.Cleanup();
 		ExitProcess(0);
 	}
