@@ -28,23 +28,23 @@ namespace robitRabit {
 					}
 					break;
 				}
-			case WM_CLOSE:{
-				ExitProgram();
-			}
-			case WM_QUIT:{
-				ExitProgram();
-			}
+				case WM_CLOSE:{
+					ExitProgram();
+				}
+				case WM_QUIT:{
+					ExitProgram();
+				}
 				//Normally window resolution is capped to stop you from going offscreen, so increase the maximum resolution.
-			case WM_GETMINMAXINFO:{
-				DefWindowProc(hWnd, msg, wParam, lParam);
-				MINMAXINFO *pmmi = (MINMAXINFO*)lParam;
-				pmmi->ptMaxTrackSize.x *= 2;
-				pmmi->ptMaxTrackSize.y *= 2;
-				break;
-			}
-			default:{
-				return DefWindowProc(hWnd, msg, wParam, lParam);
-			}
+				case WM_GETMINMAXINFO:{
+					DefWindowProc(hWnd, msg, wParam, lParam);
+					MINMAXINFO *pmmi = (MINMAXINFO*)lParam;
+					pmmi->ptMaxTrackSize.x *= 2;
+					pmmi->ptMaxTrackSize.y *= 2;
+					break;
+				}
+				default:{
+					return DefWindowProc(hWnd, msg, wParam, lParam);
+				}
 			}
 			return 0;
 		}
@@ -68,11 +68,11 @@ namespace robitRabit {
 			handle = CreateWindowEx(0,
 			                        mainWndClass.lpszClassName,
 			                        "RobitRabit",
-			                        WS_OVERLAPPEDWINDOW,
-			                        CW_USEDEFAULT,
-			                        0,
-									CW_USEDEFAULT,
-			                        0,
+									WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME,
+									0,
+									0,
+									1650,
+									990,
 			                        nullptr,
 			                        nullptr,
 			                        mainWndClass.hInstance,
