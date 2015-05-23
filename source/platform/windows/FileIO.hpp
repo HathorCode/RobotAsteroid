@@ -8,6 +8,7 @@
 #include <engine/renderer/Shader.hpp>
 
 #include <app/App.hpp>
+#include <app/AssetManager.hpp>
 
 #include <platform/Enum.hpp>
 
@@ -87,8 +88,16 @@ namespace robitRabit {
 			log.Write("[Shaders] Shader compilation error, try redownloading game assets.");
 			ExitProgram();
 		}
-		
-		/*for (uint32 spriteIndex = firstSprite; spriteIndex < countSprites + firstSprite; ++spriteIndex) {
+
+		uint32 firstSprite = 2;
+		uint32 countSprites = 1;
+		float32 spriteScaleFactors[] = {
+			1920
+		};
+		Sprite* sprites[] = {
+			&assets.background	
+		};
+		for (uint32 spriteIndex = firstSprite; spriteIndex < countSprites + firstSprite; ++spriteIndex) {
 			auto spriteZeroIndex = spriteIndex - firstSprite;
 			Sprite& sprite = *sprites[spriteZeroIndex];
 			sprite.texture.Init();
@@ -103,8 +112,8 @@ namespace robitRabit {
 			            tfr.pxLenX,
 			            tfr.pxLenY,
 			            (void*)(((uintptr)bytesPlayerSpriteBufferOffset) + bytesSpriteVerticesSize * spriteZeroIndex));
-		  }
-		*/
+		}
+		
 		for (uint32 fileIndex = 0; fileIndex < countFiles; ++fileIndex) {
 			Free(files[fileIndex].data);
 		}
