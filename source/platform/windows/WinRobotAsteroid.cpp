@@ -14,20 +14,20 @@
 #include <engine/renderer/Renderer.hpp>
 #include <engine/renderer/Camera.hpp>
 
-#include <game/Balance.hpp>
-#include <game/Game.hpp>
+#include <app/Balance.hpp>
+#include <app/App.hpp>
 
 #include <engine/renderer/Font.hpp>
 
 #include <Windows.h>
 
 namespace robitRabit {
-	static float32 cyclesPerMS; //Game clock frequency
+	static float32 cyclesPerMS; //App clock frequency
 
 	//State functions
-	void GameState() {
-		//Initialize game state
-		game.Init();
+	void AppState() {
+		//Initialize app state
+		app.Init();
 		LARGE_INTEGER curTimeCycles, oldTimeCycles;
 		int64 cyclesElapsed;
 		float32 delta = 0.0f;
@@ -44,11 +44,11 @@ namespace robitRabit {
 			}
 
 			while (delta >= mspt) {
-				game.Update();
+				app.Update();
 				delta -= mspt;
 			}
 			glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-			game.Render(delta);
+			app.Render(delta);
 		}
 	}
 }
@@ -80,6 +80,6 @@ int __stdcall WinMain(HINSTANCE paramHInstance, HINSTANCE hPrevInstance, LPSTR l
 	}
 	gl.Init();                                           
 	LoadFiles();
-	GameState();
+	AppState();
 	//Never reached
 }

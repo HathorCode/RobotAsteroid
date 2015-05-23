@@ -1,9 +1,9 @@
 /*
-	Manages game asset loading and streaming.
+	Manages app asset loading and streaming.
 */
 
 #pragma once
 
-namespace tc {
+namespace robitRabit {
 	
 }

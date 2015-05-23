@@ -3,14 +3,8 @@
 */
 #pragma once
 
-namespace tc {
+namespace robitRabit {
 	struct {
-#ifdef _DEBUG
-		//Direct ToastCat controls for debugging
-		bool up,
-			 down,
-			 left,
-			 right;
-#endif
+		
 	} activeControls;
 }
