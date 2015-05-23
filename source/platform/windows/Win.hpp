@@ -4,6 +4,9 @@
 #pragma once
 #include <app/Controls.hpp>
 
+#include <Windows.h>
+#include <Windowsx.h>
+
 namespace robitRabit {
 	struct Win {
 		HWND handle;
@@ -13,7 +16,6 @@ namespace robitRabit {
 		uint32 pxWorkingWinSizeY;
 		float32 aspectRatio;
 
-		//TODO: split this up into separate handlers for different game states
 		static LRESULT __stdcall WndHandleInput(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			switch (msg) {
 				case WM_KEYDOWN:{
@@ -21,17 +23,25 @@ namespace robitRabit {
 					
 					}
 					break;
-				}
-				case WM_KEYUP:{
+				} case WM_KEYUP:{
 					switch (wParam) {
 					
 					}
 					break;
-				}
-				case WM_CLOSE:{
+				} case WM_LBUTTONDOWN:{
+					controls.lmouse = true;
+				} case WM_RBUTTONDOWN:{
+					controls.rmouse = true;			
+				} case WM_LBUTTONUP:{
+					controls.lmouse = false;				
+				} case WM_RBUTTONUP:{
+					controls.rmouse = false;				
+				} case WM_MOUSEMOVE:{
+					controls.pxMousePosX = GET_X_LPARAM(lParam);
+					controls.pxMousePosY = GET_Y_LPARAM(lParam);
+				} case WM_CLOSE:{
 					ExitProgram();
-				}
-				case WM_QUIT:{
+				} case WM_QUIT:{
 					ExitProgram();
 				}
 				//Normally window resolution is capped to stop you from going offscreen, so increase the maximum resolution.
@@ -41,8 +51,7 @@ namespace robitRabit {
 					pmmi->ptMaxTrackSize.x *= 2;
 					pmmi->ptMaxTrackSize.y *= 2;
 					break;
-				}
-				default:{
+				} default:{
 					return DefWindowProc(hWnd, msg, wParam, lParam);
 				}
 			}

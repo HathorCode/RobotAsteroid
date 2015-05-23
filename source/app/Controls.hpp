@@ -5,6 +5,9 @@
 
 namespace robitRabit {
 	struct {
-		
-	} activeControls;
+		bool lmouse;
+		bool rmouse;
+		uint32 pxMousePosX,
+			   pxMousePosY;
+	} controls;
 }

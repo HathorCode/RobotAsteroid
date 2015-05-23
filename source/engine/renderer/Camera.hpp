@@ -2,6 +2,7 @@
 #include "Sprite.hpp"
 #include "SRT.hpp"
 #include "Drawable.hpp"
+#include "Shader.hpp"
 
 #include <glm/mat3x3.hpp>
 
