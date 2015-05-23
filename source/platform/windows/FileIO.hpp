@@ -64,7 +64,7 @@ namespace robitRabit {
 		Str fileNames[] = {
 			Str("assets/main.vert"),
 			Str("assets/main.frag"),
-			Str("assets/sprites/hotsinglesinyourarea.tga"),
+			Str("assets/hotsinglesinyourarea.tga"),
 		};
 		const uint32 countFiles = sizeof(fileNames) / sizeof(fileNames[0]);
 		File files[sizeof(fileNames) / sizeof(fileNames[0])];   //Because god forbid C++ allow using constants in array sizes.
