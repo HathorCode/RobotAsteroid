@@ -1,50 +1,49 @@
+#freetype is currently disabled
 cmake_minimum_required(VERSION 3.0)
 
-add_subdirectory("third party/Box2D")
-
-project(ToastCat)
+project(RobotAsteroid)
 
 include_directories(${CMAKE_CURRENT_SOURCE_DIR})
 include_directories("third party")
-include_directories("third party/freetype/include/")
+#include_directories("third party/freetype/include/")
 include_directories("third party/openal/include/")
 include_directories("third party/ogg/include/")
 include_directories("third party/vorbis/include/")
 
 link_directories(${CMAKE_CURRENT_SOURCE_DIR})
-link_directories("third party/freetype/lib")
+#link_directories("third party/freetype/lib")
 link_directories("third party/openal/libs/Win64")
 link_directories("third party/ogg")
 link_directories("third party/vorbis")
 
-# add_custom_command(TARGET ToastCat PRE_BUILD
+# add_custom_command(TARGET RobotAsteroid PRE_BUILD
 #                    COMMAND ${CMAKE_COMMAND} -E copy_directory
 #                    ${CMAKE_SOURCE_DIR}/../assets/build ${CMAKE_BUILD_DIRECTORY}/assets)
 
 file(GLOB_RECURSE allCodeFiles RELATIVE ${CMAKE_CURRENT_SOURCE_DIR} "*.hpp" "*.cpp")
 
 if(WIN32)
-add_executable(ToastCat WIN32 ${allCodeFiles})
+add_executable(RobotAsteroid WIN32 ${allCodeFiles})
 elseif(UNIX)
-add_executable(ToastCat ${allCodeFiles})
+add_executable(RobotAsteroid ${allCodeFiles})
 endif()
 
-target_link_libraries(ToastCat freetype255ST)
-target_link_libraries(ToastCat OpenAL32)
-target_link_libraries(ToastCat ogg)
-target_link_libraries(ToastCat vorbis)
+#target_link_libraries(RobotAsteroid freetype255ST)
+target_link_libraries(RobotAsteroid OpenAL32)
+target_link_libraries(RobotAsteroid ogg)
+target_link_libraries(RobotAsteroid vorbis)
 
-target_compile_definitions(ToastCat
+target_compile_definitions(RobotAsteroid
   PRIVATE tcPlatGL)
 if(WIN32)
-target_compile_definitions(ToastCat
+target_compile_definitions(RobotAsteroid
 	PRIVATE tcPlatWin)
-target_link_libraries(ToastCat OpenGL32)
+target_link_libraries(RobotAsteroid OpenGL32)
 elseif(UNIX)
 if(NOT APPLE)
-target_compile_definitions(ToastCat
+target_compile_definitions(RobotAsteroid
 	PRIVATE tcPlatLinux)
-target_link_libraries(ToastCat gl)
+target_link_libraries(RobotAsteroid gl)
 endif(NOT APPLE)
 endif()
 
