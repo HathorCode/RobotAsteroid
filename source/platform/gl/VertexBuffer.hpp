@@ -1,7 +1,7 @@
 #pragma once
 #include "GLProcPtrs.hpp"
 
-namespace tc {
+namespace robitRabit {
 	const uint32 bytesSpriteVerticesSize = sizeof(GLfloat) * 8;
 	GLvoid* const bytesPlayerSpriteBufferOffset = (GLvoid*)(bytesSpriteVerticesSize * 2); //Location of toastcat in VBO
 	//This is always at the top of some vertex buffer

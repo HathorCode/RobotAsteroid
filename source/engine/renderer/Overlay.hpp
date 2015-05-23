@@ -5,7 +5,7 @@
 #pragma once
 #include <engine/renderer/Drawable.hpp>
 
-namespace tc {
+namespace robitRabit {
 	struct Overlay {
 		Drawable* elems;
 		uint32 countElems;

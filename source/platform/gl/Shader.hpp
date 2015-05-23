@@ -10,7 +10,7 @@
 
 #include <glm/mat3x3.hpp>
 
-namespace tc {
+namespace robitRabit {
 	struct MainShader {
 		GLuint glslProgram;
 		GLuint vertexArray;
@@ -48,7 +48,7 @@ namespace tc {
 					Str shaderErrorLog;
 					glGetShaderiv(shaders[i], GL_INFO_LOG_LENGTH, (GLint*)&shaderErrorLog.len);
 
-					shaderErrorLog.str = (char*)allocator.Alloc(shaderErrorLog.len);
+					shaderErrorLog.str = (char*)alloc(shaderErrorLog.len);
 					GLint fakeLength;
 					glGetShaderInfoLog(shaders[i], shaderErrorLog.len, &fakeLength, shaderErrorLog.str);
 
@@ -107,7 +107,7 @@ namespace tc {
 			                      GL_FALSE,
 			                      0,
 			                      0);
-			return (tc::ShaderInitError)0;
+			return (robitRabit::ShaderInitError)0;
 		}
 		void Use() const {
 			glUseProgram(this->glslProgram);

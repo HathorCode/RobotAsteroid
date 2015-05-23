@@ -7,7 +7,7 @@
 #include <ft2build.h>
 #include FT_FREETYPE_H
 
-namespace tc {
+namespace robitRabit {
 	struct Font {
 		//Creates an atlas from the given font file.
 		uint32 Init(const uint8* fontFileData, const uintptr fileDataSize, const uint32 pxFontSize) {

@@ -7,7 +7,7 @@
 
 #include <Windows.h>
 
-namespace tc {
+namespace robitRabit {
 	//Globals used by the other part of the windows platform abstraction
 	HINSTANCE hInstance;
 	intptr bytesPageSize;
@@ -19,7 +19,7 @@ namespace tc {
 #   define defWindowCallback(name) LRESULT __stdcall name(HWND hWnd, UINT uMsg, WPARAM wParam, LPARAM lParam)
 	
 	void ExitProgram() {
-		tc::log.Cleanup();
+		robitRabit::log.Cleanup();
 		ExitProcess(0);
 	}
 }

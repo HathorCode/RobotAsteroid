@@ -8,7 +8,7 @@
 #   error platform undefined
 #endif
 
-namespace tc {
+namespace robitRabit {
 	const int noError = 0;	//Shared enumeration
 	enum ShaderInitError {
 		/* Anything which returns this could also return noError

@@ -1,6 +1,6 @@
 #pragma once
 
-namespace tc {
+namespace robitRabit {
 	enum FileError {
 		FE_accessDenied = 1,
 		FE_fileEmpty,

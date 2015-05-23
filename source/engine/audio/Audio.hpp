@@ -15,7 +15,7 @@
 
 #define BUFFER_SIZE 32768
 
-namespace tc {
+namespace robitRabit {
 	void ExitProgram();
 
 	struct AudioTrack {

@@ -32,7 +32,7 @@ typedef double float64;
 	typedef uint32 uintptr;
 #endif
 
-namespace tc {
+namespace robitRabit {
 	//Simple string with stored length
 	struct ConstStr {
 		uint32 len;

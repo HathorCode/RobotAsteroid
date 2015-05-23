@@ -7,7 +7,7 @@
 #include "tcTexture.hpp"
 
 //TODO: fix allocations
-namespace tc {
+namespace robitRabit {
 	struct MenuRenderer {
 		VertexBuffer buttonVertexBuffer;
 		GLfloat* vertices;

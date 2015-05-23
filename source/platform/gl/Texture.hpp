@@ -5,7 +5,7 @@
 #pragma once
 #include "GLProcPtrs.hpp"
 
-namespace tc {
+namespace robitRabit {
 #ifdef _MSC_VER
 #pragma pack(push)
 #pragma pack(1)

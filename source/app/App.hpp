@@ -7,10 +7,9 @@
 #include <engine/renderer/Camera.hpp>
 #include <engine/renderer/Overlay.hpp>
 
-#include <platform/Options.hpp>
-#include <platform/Menu.hpp>
+#include <platform/Win.hpp>
 
-namespace tc {
+namespace robitRabit {
 	struct {
 		Camera camera;
 		Overlay hud;
@@ -18,7 +17,7 @@ namespace tc {
 		void Init() {
 			camera.mScale = 10.0f;  //Screen width is 10 meters
 			camera.Init(glm::mat3(1.0f/camera.mScale, 0.0f, 0.0f,
-			                      0.0f, 1.0f/camera.mScale * options.aspectRatio, 0.0f,
+			                      0.0f, 1.0f/camera.mScale * win.aspectRatio, 0.0f,
 			                      0.0f, 0.0f, 1.0f));
 		}
 		void Update() {
@@ -27,5 +26,5 @@ namespace tc {
 		void Render(float32 delta) {
 		
 		}
-	} game;
+	} app;
 }

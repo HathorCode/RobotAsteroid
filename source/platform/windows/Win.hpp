@@ -2,50 +2,29 @@
   Struct for window management.
 */
 #pragma once
-#include "Menu.hpp"
+#include <app/Controls.hpp>
 
-#include <game/Controls.hpp>
-
-namespace tc {
+namespace robitRabit {
 	struct Win {
 		HWND handle;
 		HDC deviceContext;
 		WNDCLASSEX mainWndClass;
+		uint32 pxWorkingWinSizeX;
+		uint32 pxWorkingWinSizeY;
+		float32 aspectRatio;
 
 		//TODO: split this up into separate handlers for different game states
 		static LRESULT __stdcall WndHandleInput(HWND hWnd, UINT msg, WPARAM wParam, LPARAM lParam) {
 			switch (msg) {
 				case WM_KEYDOWN:{
 					switch (wParam) {
-					case 'W':
-						activeControls.up = true;
-						break;
-					case 'S':
-						activeControls.down = true;
-						break;
-					case 'A':
-						activeControls.left = true;
-						break;
-					case 'D':
-						activeControls.right = true;
-						break;
+					
 					}
 					break;
 				}
 				case WM_KEYUP:{
 					switch (wParam) {
-					case 'W':
-						activeControls.up = false;
-						break;
-					case 'S':
-						activeControls.down = false;
-						break;
-					case 'A':
-						activeControls.left = false;
-						break;
-					case 'D':
-						activeControls.right = false;
-						break;
+					
 					}
 					break;
 				}
@@ -86,35 +65,26 @@ namespace tc {
 			assert(succeeded0 != 0);
 		}
 		bool Init() {
-			//Calculate window coordinates
-			//TODO: Implement true fullscreen
-			RECT wndRect;
-			if (options.fullscreenMode == Options::FullscreenMode::fullscreen
-			    || options.fullscreenMode == Options::FullscreenMode::windowedFullscreen) {
-				wndRect.left = 0;
-				wndRect.right = GetSystemMetrics(SM_CXSCREEN);
-				wndRect.top = 0;
-				wndRect.bottom = GetSystemMetrics(SM_CYSCREEN);
-				AdjustWindowRect(&wndRect, WS_OVERLAPPEDWINDOW, false);
-			} else {
-				wndRect.left = (GetSystemMetrics(SM_CXSCREEN) - options.pxResX) / 2;    //Left should be adjusted by half of difference between fullscreen res and options res
-				wndRect.right = GetSystemMetrics(SM_CXSCREEN) - wndRect.left;           //Subtract the previously calculated gap on screen since this is the right coordinate not the width
-				wndRect.top = (GetSystemMetrics(SM_CYSCREEN) - options.pxResY) / 2;
-				wndRect.bottom = GetSystemMetrics(SM_CYSCREEN) - wndRect.top;
-				AdjustWindowRect(&wndRect, WS_OVERLAPPEDWINDOW, false);
-			}
 			handle = CreateWindowEx(0,
 			                        mainWndClass.lpszClassName,
-			                        "ToastCat",
+			                        "Not ToastCat",
 			                        WS_OVERLAPPEDWINDOW,
-			                        wndRect.left,
-			                        wndRect.top,
-			                        wndRect.right - wndRect.left,
-			                        wndRect.bottom - wndRect.top,
+			                        CW_USEDEFAULT,
+			                        0,
+									CW_USEDEFAULT,
+			                        0,
 			                        nullptr,
 			                        nullptr,
 			                        mainWndClass.hInstance,
 			                        nullptr);
+			RECT dim;
+			GetWindowRect(handle, &dim);
+			pxWorkingWinSizeX = dim.right - dim.left;
+			pxWorkingWinSizeY = dim.bottom - dim.top;
+			//TODO: test this
+			--pxWorkingWinSizeX;
+			++pxWorkingWinSizeY;
+			aspectRatio = ((float32)pxWorkingWinSizeX)/pxWorkingWinSizeY;
 			if (handle != nullptr) {
 				deviceContext = GetDC(handle);
 				assert(deviceContext != nullptr);
@@ -139,7 +109,6 @@ namespace tc {
 				TranslateMessage(&wndMsg);
 				DispatchMessage(&wndMsg);
 			}
-			menu.HandleAnyButtonMsgs();
 			SwapBuffers(deviceContext);
 		}
 	} win;

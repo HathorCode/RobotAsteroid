@@ -7,7 +7,7 @@
 
 #include <glm/mat3x3.hpp>
 
-namespace tc {
+namespace robitRabit {
 
 	struct Sprite {
 		GLvoid* bytesBufferOffset;   //Offset into buffer of vertices

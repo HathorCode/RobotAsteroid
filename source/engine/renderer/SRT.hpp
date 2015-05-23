@@ -3,7 +3,7 @@
 #pragma once
 #include <glm/mat3x3.hpp>
 
-namespace tc {
+namespace robitRabit {
 	struct SRT {
 		/*TODO: implement as a smaller object
 		  Which can be transformed into the larger matrix*/

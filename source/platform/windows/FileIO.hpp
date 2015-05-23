@@ -7,8 +7,7 @@
 #include <engine/renderer/Texture.hpp>
 #include <engine/renderer/Shader.hpp>
 
-#include <game/Game.hpp>
-#include <game/Trailer.hpp>
+#include <app/App.hpp>
 
 #include <platform/Enum.hpp>
 
@@ -27,7 +26,7 @@ namespace robitRabit {
 		if (file != INVALID_HANDLE_VALUE) {
 			*sizeOut = GetFileSize(file, nullptr);
 			if (*sizeOut != 0) {
-				*dataBuffer = allocator.Alloc(*sizeOut);    //TODO: allocate this elsewhere
+				*dataBuffer = alloc(*sizeOut);    //TODO: allocate this elsewhere
 				if (dataBuffer) {
 					uint32 bytesRead;
 					if (ReadFile(file, *dataBuffer, *sizeOut, (DWORD*)&bytesRead, nullptr) && bytesRead == *sizeOut) {

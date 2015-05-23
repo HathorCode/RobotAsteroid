@@ -19,7 +19,7 @@
 PFNWGLCHOOSEPIXELFORMATARBPROC      wglChoosePixelFormatARB;
 PFNWGLCREATECONTEXTATTRIBSARBPROC   wglCreateContextAttribsARB;
 
-namespace tc {
+namespace robitRabit {
 	struct OGL {
 		HGLRC handle;
 		

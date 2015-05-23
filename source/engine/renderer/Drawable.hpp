@@ -5,7 +5,7 @@
 #include "Sprite.hpp"
 #include "SRT.hpp"
 
-namespace tc {
+namespace robitRabit {
 	struct Drawable {
 		Sprite sprite;
 		SRT transform;

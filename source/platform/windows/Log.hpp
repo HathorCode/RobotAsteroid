@@ -2,11 +2,11 @@
 	Logs data to log.txt on error.
 */
 #pragma once
-#include "Enum.hpp"
+#include <platform/Enum.hpp>
 
 #include <Windows.h>
 
-namespace tc {
+namespace robitRabit {
 	struct Log {
 		HANDLE logFile;
 		//Opens the log file

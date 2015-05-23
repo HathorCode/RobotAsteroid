@@ -3,19 +3,17 @@
 */
 #include <Global.hpp>
 
-#include "Menu.hpp"
 #include "FileIO.hpp"
 #include "Platform.hpp"
 #include "Log.hpp"
-#include "Options.hpp"
 #include "GLHeader.hpp"
 #include "Win.hpp"
 
 #include <engine/renderer/Renderer.hpp>
 #include <engine/renderer/Camera.hpp>
 
-#include <app/Balance.hpp>
 #include <app/App.hpp>
+#include <app/Balance.hpp>
 
 #include <engine/renderer/Font.hpp>
 
@@ -61,22 +59,17 @@ int __stdcall WinMain(HINSTANCE paramHInstance, HINSTANCE hPrevInstance, LPSTR l
 	//Unfailable initialization
 	hInstance = paramHInstance;
 	Font::InitFreeType();
-	Options::Init();
 	LARGE_INTEGER cyclesPerSecondInt;
 	QueryPerformanceFrequency(&cyclesPerSecondInt);
 	cyclesPerMS = (float32)cyclesPerSecondInt.QuadPart; //Cycles per second
 	cyclesPerMS /= 1000.0f;                             //Cycles per ms (cycles/s * s/ms)
 	win.RegisterWndClass();
-	menu.RegisterWndClass();
 
 	//Try to start a window
 	if (!win.Init()) {
-		options = safeModeOptions;
-		if (!win.Init()) {
-			robitRabit::log.Write("Failed to create a basic window in safe mode.\n"
-			              		  "Try updating your graphics drivers.");
-			ExitProgram();
-		}
+		robitRabit::log.Write("Failed to create a basic window in safe mode.\n"
+							  "Try updating your graphics drivers.");
+		ExitProgram();
 	}
 	gl.Init();                                           
 	LoadFiles();
