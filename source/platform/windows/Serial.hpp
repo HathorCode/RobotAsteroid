@@ -4,6 +4,8 @@
 #include <assert.h>
 #include <vector>
 
+#include <platform\windows\Log.hpp>
+
 namespace robitRabit {
 	struct Serial {
 		DCB dcb;
@@ -15,10 +17,12 @@ namespace robitRabit {
 			
 			dcb.DCBlength = sizeof(DCB);
 			dcb.BaudRate = CBR_9600;
-			dcb.ByteSize = 8;
+			dcb.ByteSize = 10;
 			dcb.Parity = NOPARITY;
 			dcb.StopBits = ONESTOPBIT;
-			//assert(!SetCommState(dataHandle, &dcb));
+			if (!SetCommState(dataHandle, &dcb)) {
+				log.Write("[SerialCommunications] The Communications state could not be initialized properly.");
+			}
 		}
 
 		inline void SendData(char* dataToSend) {
