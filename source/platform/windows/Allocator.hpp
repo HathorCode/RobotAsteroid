@@ -8,15 +8,15 @@
 #include <cstdio>
 
 namespace robitRabit {
-	uint8* alloc(intptr amount) {
+	uint8* Alloc(intptr amount) {
 		assert(amount > 0);
 		return (uint8*)malloc(amount);
 	}
-	uint8* realloc(uint8* bytes, intptr newAmount) {
+	uint8* Realloc(uint8* bytes, intptr newAmount) {
 		assert(newAmount > 0);
 		return (uint8*)::realloc((void*)bytes, newAmount);
 	}
-	void free(uint8* bytes) {
+	void Free(uint8* bytes) {
 		::free((void*)bytes);
 	}
 }

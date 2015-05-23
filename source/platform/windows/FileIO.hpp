@@ -26,7 +26,7 @@ namespace robitRabit {
 		if (file != INVALID_HANDLE_VALUE) {
 			*sizeOut = GetFileSize(file, nullptr);
 			if (*sizeOut != 0) {
-				*dataBuffer = alloc(*sizeOut);    //TODO: allocate this elsewhere
+				*dataBuffer = Alloc(*sizeOut);    //TODO: allocate this elsewhere
 				if (dataBuffer) {
 					uint32 bytesRead;
 					if (ReadFile(file, *dataBuffer, *sizeOut, (DWORD*)&bytesRead, nullptr) && bytesRead == *sizeOut) {
@@ -53,7 +53,8 @@ namespace robitRabit {
 		}
 	}
 	void LoadFiles() {
-		
+		//Loads all files into memory
+
 	}
 
 	void Log::WriteFileError(const FileError error, const Str fileName) {

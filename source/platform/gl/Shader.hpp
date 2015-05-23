@@ -48,7 +48,7 @@ namespace robitRabit {
 					Str shaderErrorLog;
 					glGetShaderiv(shaders[i], GL_INFO_LOG_LENGTH, (GLint*)&shaderErrorLog.len);
 
-					shaderErrorLog.str = (char*)alloc(shaderErrorLog.len);
+					shaderErrorLog.str = (char*)Alloc(shaderErrorLog.len);
 					GLint fakeLength;
 					glGetShaderInfoLog(shaders[i], shaderErrorLog.len, &fakeLength, shaderErrorLog.str);
 
