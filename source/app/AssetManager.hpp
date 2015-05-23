@@ -8,5 +8,6 @@
 namespace robitRabit {
 	struct {
 		Sprite background;
+		Sprite obs;
 	} assets;
 }

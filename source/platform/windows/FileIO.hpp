@@ -66,6 +66,7 @@ namespace robitRabit {
 			Str("assets/main.vert"),
 			Str("assets/main.frag"),
 			Str("assets/hotsinglesinyourarea.tga"),
+			Str("assets/free_Viagra.tga"),
 		};
 		const uint32 countFiles = sizeof(fileNames) / sizeof(fileNames[0]);
 		File files[sizeof(fileNames) / sizeof(fileNames[0])];   //Because god forbid C++ allow using constants in array sizes.
@@ -89,14 +90,17 @@ namespace robitRabit {
 			ExitProgram();
 		}
 
-		uint32 firstSprite = 2;
-		uint32 countSprites = 1;
 		float32 spriteScaleFactors[] = {
-			1920
+			1920,
+			432
 		};
+		uint32 countSprites = sizeof(spriteScaleFactors) / sizeof(spriteScaleFactors[0]);
+		uint32 firstSprite = 2;
 		Sprite* sprites[] = {
-			&assets.background	
+			&assets.background,
+			&assets.obs,
 		};
+		assert(countSprites == sizeof(sprites)/sizeof(sprites[0]));
 		for (uint32 spriteIndex = firstSprite; spriteIndex < countSprites + firstSprite; ++spriteIndex) {
 			auto spriteZeroIndex = spriteIndex - firstSprite;
 			Sprite& sprite = *sprites[spriteZeroIndex];
