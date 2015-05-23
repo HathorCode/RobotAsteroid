@@ -21,7 +21,7 @@
 
 #include <Windows.h>
 
-namespace tc {
+namespace robitRabit {
 	static float32 cyclesPerMS; //Game clock frequency
 
 	//State functions
@@ -55,8 +55,8 @@ namespace tc {
 
 //Windows entrypoint
 int __stdcall WinMain(HINSTANCE paramHInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow) {
-	using namespace tc; 
-	tc::log.Init();
+	using namespace robitRabit; 
+	robitRabit::log.Init();
 
 	//Unfailable initialization
 	hInstance = paramHInstance;
@@ -73,18 +73,13 @@ int __stdcall WinMain(HINSTANCE paramHInstance, HINSTANCE hPrevInstance, LPSTR l
 	if (!win.Init()) {
 		options = safeModeOptions;
 		if (!win.Init()) {
-			tc::log.Write("Failed to create a basic window in safe mode.\n"
-			              "Try updating your graphics drivers.");
+			robitRabit::log.Write("Failed to create a basic window in safe mode.\n"
+			              		  "Try updating your graphics drivers.");
 			ExitProgram();
 		}
 	}
-	allocator.Init();
-	allocator.CommitMem(bytesPageSize * 2);             //TODO: figure out what this should be properly
 	gl.Init();                                           
-	LoadStartupFiles();
+	LoadFiles();
 	GameState();
-
 	//Never reached
-	ExitProgram();
-	return 0;
 }
