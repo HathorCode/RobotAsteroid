@@ -21,7 +21,7 @@ namespace robitRabit {
 			dcb.Parity = NOPARITY;
 			dcb.StopBits = ONESTOPBIT;
 			if (!SetCommState(dataHandle, &dcb)) {
-				log.Write("[SerialCommunications] The Communications state could not be initialized properly.");
+				log.Write("[SerialCommunications] The Communications state could not be initialized properly.\n");
 			}
 		}
 
