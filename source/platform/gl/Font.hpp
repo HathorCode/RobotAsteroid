@@ -9,11 +9,19 @@
 
 namespace robitRabit {
 	struct Font {
+		//Freetype initialization
+		static void InitFreeType() {
+			//TODO: integrate with allocator
+			FT_Error e = FT_Init_FreeType(&ftLibrary);
+			assert(!e);
+		}
+
 		//Creates an atlas from the given font file.
 		uint32 Init(const uint8* fontFileData, const uintptr fileDataSize, const uint32 pxFontSize) {
 			assert(pxFontSize > 0);
 			assert(fontFileData);
 			assert(fileDataSize > 0);
+
 			FT_Face ftFont;
 			FT_Error e;
 			uint32 cmin = 0x21; //Minimum character glyph value to load
@@ -28,14 +36,6 @@ namespace robitRabit {
 			                       0,	
 			                       pxFontSize);
 			if (e) {return e;}
-			
-		}
-
-		//Freetype initialization
-		static void InitFreeType() {
-			//TODO: integrate with allocator
-			FT_Error e = FT_Init_FreeType(&ftLibrary);
-			assert(!e);
 		}
 	private:
 		static FT_Library ftLibrary;
