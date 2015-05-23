@@ -30,15 +30,20 @@ namespace robitRabit {
 					break;
 				} case WM_LBUTTONDOWN:{
 					controls.lmouse = true;
+					break;
 				} case WM_RBUTTONDOWN:{
 					controls.rmouse = true;			
+					break;
 				} case WM_LBUTTONUP:{
 					controls.lmouse = false;				
+					break;
 				} case WM_RBUTTONUP:{
 					controls.rmouse = false;				
+					break;
 				} case WM_MOUSEMOVE:{
 					controls.pxMousePosX = GET_X_LPARAM(lParam);
 					controls.pxMousePosY = GET_Y_LPARAM(lParam);
+					break;
 				} case WM_CLOSE:{
 					ExitProgram();
 				} case WM_QUIT:{

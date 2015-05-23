@@ -74,8 +74,8 @@ int __stdcall WinMain(HINSTANCE paramHInstance, HINSTANCE hPrevInstance, LPSTR l
 		ExitProgram();
 	}
 	gl.Init();
-	//serial.Init();
-	//serial.SendData("else"); // Remove in a sec
+	serial.Init();
+	serial.SendData("else"); // Remove in a sec
 	LoadFiles();
 	AppState();
 	//Never reached
