@@ -71,8 +71,8 @@ namespace robitRabit {
 									WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,
 									0,
 									0,
-									1650,
-									990,
+			                        1600,   //1650
+			                        900,    //990
 			                        nullptr,
 			                        nullptr,
 			                        mainWndClass.hInstance,
