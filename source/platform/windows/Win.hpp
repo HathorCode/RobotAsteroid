@@ -78,12 +78,11 @@ namespace robitRabit {
 			                        mainWndClass.hInstance,
 			                        nullptr);
 			RECT dim;
-			GetWindowRect(handle, &dim);
+			GetClientRect(handle, &dim);
 			pxWorkingWinSizeX = dim.right - dim.left;
 			pxWorkingWinSizeY = dim.bottom - dim.top;
-			//TODO: test this
-			--pxWorkingWinSizeX;
-			++pxWorkingWinSizeY;
+			pxWorkingWinSizeX;
+			pxWorkingWinSizeY;
 			aspectRatio = ((float32)pxWorkingWinSizeX)/pxWorkingWinSizeY;
 			if (handle != nullptr) {
 				deviceContext = GetDC(handle);
