@@ -6,6 +6,7 @@
 #include "AssetManager.hpp"
 
 #include <engine/renderer/Drawable.hpp>
+#include <engine/renderer/Camera.hpp>
 
 #include <platform/Win.hpp>
 
@@ -13,7 +14,7 @@
 
 namespace robitRabit {
 	struct Obstacle {
-		Drawable obss;
+		Drawable obsSprite;
 		int32 pxTLX,   //Top left corner x coordinate
 			  pxTLY,
 			  pxBRX,   //Bottom right corner x coordinate
@@ -23,8 +24,8 @@ namespace robitRabit {
 			pxTLY = initPXTLY;
 			pxBRX = initPXBRX;
 			pxBRY = initPXBRY;
-			obss.sprite = assets.obs;
-			obss.transform.SetIdentity();
+			obsSprite.sprite = assets.obs;
+			obsSprite.transform.SetIdentity();
 			
 			int32 pxLenX = pxBRX - pxTLX;
 			int32 pxLenY = pxBRY - pxTLY;
@@ -35,8 +36,8 @@ namespace robitRabit {
 			float32 scrTransX = ((float32)pxTransX) / win.pxWorkingWinSizeX;
 			float32 scrTransY = ((float32)pxTransY) / win.pxWorkingWinSizeY;
 
-			obss.transform.Translate(scrTransX, scrTransY);
-			obss.transform.Scale(scrLenX, scrLenY);
+			obsSprite.transform.Translate(scrTransX, scrTransY);
+			obsSprite.transform.Scale(scrLenX, scrLenY);
 		}
 	};
 	std::vector<Obstacle> obstacles;
@@ -50,19 +51,16 @@ namespace robitRabit {
 	    	  pxAnchor1Y;
 		Obstacle actual;
 
-		void Begin(int32 pxCornerX, int32 pxCornerY) {
+		void Begin() {
 			assert(!active);
-			assert(pxCornerX > 0);
-			assert(pxCornerY > 0);
-			pxAnchor0X = pxCornerX;
-			pxAnchor0Y = pxCornerY;
+			pxAnchor0X = controls.pxMousePosX;
+			pxAnchor0Y = controls.pxMousePosY;
 			active = true;
-			Update();
 		}
 
 		void Update() {
-			pxAnchor1X = pxMousePosX;
-			pxAnchor1Y = pxMousePosY;
+			pxAnchor1X = controls.pxMousePosX;
+			pxAnchor1Y = controls.pxMousePosY;
 			if (pxAnchor1X == pxAnchor0X) {
 				++pxAnchor1X;
 			}
