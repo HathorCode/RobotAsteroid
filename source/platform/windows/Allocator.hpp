@@ -8,15 +8,10 @@
 
 #include <cstdio>
 
-namespace tc {
+namespace robitRabit {
 
 	struct AllocatorType {		
 		//Empty functions kept for future combination with old allocator
-		void Init() {
-		}
-		void CommitMem(intptr newAmount) {
-		}
-
 		uint8* Alloc(intptr amount) {
 			assert(amount > 0);
 			return (uint8*)malloc(amount);
