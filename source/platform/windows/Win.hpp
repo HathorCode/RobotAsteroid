@@ -59,7 +59,7 @@ namespace robitRabit {
 			mainWndClass.hCursor = LoadCursor(nullptr, IDC_ARROW);
 			mainWndClass.hbrBackground = (HBRUSH)(COLOR_BACKGROUND + 1);
 			mainWndClass.lpszMenuName = nullptr;
-			mainWndClass.lpszClassName = "ToastCatClass";
+			mainWndClass.lpszClassName = "RobitClass";
 			mainWndClass.hIconSm = nullptr;
 			ATOM succeeded0 = RegisterClassEx(&mainWndClass);
 			assert(succeeded0 != 0);
@@ -67,7 +67,7 @@ namespace robitRabit {
 		bool Init() {
 			handle = CreateWindowEx(0,
 			                        mainWndClass.lpszClassName,
-			                        "Not ToastCat",
+			                        "RobitRabit",
 			                        WS_OVERLAPPEDWINDOW,
 			                        CW_USEDEFAULT,
 			                        0,
