@@ -15,7 +15,14 @@
 #include <vector>
 
 namespace robitRabit {
-	FileError ReadFileData(const char* name, uint8** dataBuffer, uint32* sizeOut) {
+	struct File {
+		uint8* data;
+		uint64 size;
+	};
+	
+	FileError ReadFileData(const char* name, File& f) {
+		uint8** dataBuffer = &f.data;
+		uint64* sizeOut = &f.size;
 		HANDLE file = CreateFile(name,			//File name
 		                         GENERIC_READ,  //Read only
 		                         0,             //unused
@@ -53,8 +60,54 @@ namespace robitRabit {
 		}
 	}
 	void LoadFiles() {
-		//Loads all files into memory
+		FileError e;
+		Str fileNames[] = {
+			Str("assets/main.vert"),
+			Str("assets/main.frag"),
+			Str("assets/sprites/hotsinglesinyourarea.tga"),
+		};
+		const uint32 countFiles = sizeof(fileNames) / sizeof(fileNames[0]);
+		File files[sizeof(fileNames) / sizeof(fileNames[0])];   //Because god forbid C++ allow using constants in array sizes.
 
+		//Read files from disk
+		for (uint32 fileIndex = 0; fileIndex < countFiles; ++fileIndex) {
+			if ((FileError)0 != (e = ReadFileData(fileNames[fileIndex].str,
+			                                      files[fileIndex]))) {
+				log.WriteFileError(e, fileNames[fileIndex]);
+				log.Write("[File IO] Crucial file could not be found.");
+				ExitProgram();
+			}
+		}
+
+		//Initialize various things from file data
+		if ((ShaderInitError)0 != mainShader.Init(files[0].size,
+			                                      (char*)files[0].data,
+			                                      files[1].size,
+			                                      (char*)files[1].data)) {
+			log.Write("[Shaders] Shader compilation error, try redownloading game assets.");
+			ExitProgram();
+		}
+		
+		/*for (uint32 spriteIndex = firstSprite; spriteIndex < countSprites + firstSprite; ++spriteIndex) {
+			auto spriteZeroIndex = spriteIndex - firstSprite;
+			Sprite& sprite = *sprites[spriteZeroIndex];
+			sprite.texture.Init();
+			Texture::TextureFileReturn tfr = Texture::FillTextureFromFileData(sprite.texture, files[spriteIndex].data);
+			if (!tfr.success) {
+				log.Write("[File Error] Sprite ");
+				log.Write(fileNames[spriteIndex]);
+				log.Write(" is invalid, try redownloading game assets.");
+				ExitProgram();
+			}
+			sprite.Init(spriteScaleFactors[spriteZeroIndex],
+			            tfr.pxLenX,
+			            tfr.pxLenY,
+			            (void*)(((uintptr)bytesPlayerSpriteBufferOffset) + bytesSpriteVerticesSize * spriteZeroIndex));
+		  }
+		*/
+		for (uint32 fileIndex = 0; fileIndex < countFiles; ++fileIndex) {
+			Free(files[fileIndex].data);
+		}
 	}
 
 	void Log::WriteFileError(const FileError error, const Str fileName) {
