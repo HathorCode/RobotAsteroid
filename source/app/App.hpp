@@ -32,8 +32,11 @@ namespace robitRabit {
 			//Handle controls
 			if (controls.lmouse) {
 				if (oip.obstacleCreatePhase == ObstacleInProgress::notInCreation) {
-					oip.Begin();
-					oip.obstacleCreatePhase = ObstacleInProgress::begin;
+					if (oip.Begin()) {
+						oip.obstacleCreatePhase = ObstacleInProgress::begin;
+					} else {
+						oip.obstacleCreatePhase = ObstacleInProgress::end;	//Button is down, but we can't create because the user clicked an obstacle
+					}
 				} else if (oip.obstacleCreatePhase == ObstacleInProgress::inProgress) {
 					oip.End();
 					oip.obstacleCreatePhase = ObstacleInProgress::end;

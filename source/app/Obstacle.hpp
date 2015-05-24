@@ -44,6 +44,22 @@ namespace robitRabit {
 	};
 	std::vector<Obstacle> obstacles;
 
+	bool Collide(uint32 pxPosX, uint32 pxPosY, Obstacle o) {
+		if (pxPosX < o.pxTLX) {
+			return false;
+		}
+		if (pxPosY < o.pxTLY) {
+			return false;
+		}
+		if (pxPosX > o.pxBRX) {
+			return false;
+		}
+		if (pxPosY > o.pxBRY) {
+			return false;
+		}
+		return true;
+	}
+
 	//An Obstacle which is actively being created
 	struct ObstacleInProgress {
 		//This is so we know how to handle mouse up and mouse down
@@ -59,11 +75,17 @@ namespace robitRabit {
 	    	  pxAnchor1Y;
 		Obstacle actual;
 
-		void Begin() {
+		bool Begin() {
 			assert(!active);
 			pxAnchor0X = controls.pxMousePosX;
 			pxAnchor0Y = controls.pxMousePosY;
+			for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
+				if (Collide(pxAnchor0X, pxAnchor0Y, obstacles[obsIndex])) {
+					return false;
+				}
+			}
 			active = true;
+			return true;
 		}
 
 		void Update() {
