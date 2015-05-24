@@ -60,7 +60,9 @@ namespace robitRabit {
 			    || oip.obstacleCreatePhase == ObstacleInProgress::inProgress) {
 				camera.Draw(oip.actual.obsSprite);
 			}
-			//camera.Draw(Drawable::FromSprite(assets.carEnd)); //To be eventually used 
+			for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
+				camera.Draw(obstacles[obsIndex].obsSprite);
+			}
 		}
 	} app;
 }
