@@ -35,11 +35,11 @@ namespace robitRabit {
 
 			float32 pxSpriteCenterX = pxLenX / 2.0f + pxTLX;
 			float32 pxSpriteCenterY = pxLenY / 2.0f + pxTLY;
-			float32 scrSpriteCenterX = pxSpriteCenterX / win.pxWorkingWinSizeX;
-			float32 scrSpriteCenterY = pxSpriteCenterY / win.pxWorkingWinSizeY;
-			float32 scrTransX = scrSpriteCenterX - 0.5f;
-			float32 scrTransY = scrSpriteCenterY;
-			obsSprite.transform.Translate(scrTransX, 0.0f);
+			float32 pxTransX = pxSpriteCenterX - ((float32)win.pxWorkingWinSizeX) / 2.0f;
+			float32 pxTransY = ((float32)win.pxWorkingWinSizeY) / 2.0f - pxSpriteCenterY;
+			float32 scrTransX = pxTransX / (win.pxWorkingWinSizeX / 2.0f);
+			float32 scrTransY = pxTransY / (win.pxWorkingWinSizeY / 2.0f);
+			obsSprite.transform.Translate(scrTransX, scrTransY / win.aspectRatio);
 		}
 	};
 	std::vector<Obstacle> obstacles;
