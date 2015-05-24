@@ -36,7 +36,7 @@ namespace robitRabit {
 			//Handle controls
 			if (controls.lmouse) {
 				if (controls.pxMousePosX < (1.0 / 15.0f * win.pxWorkingWinSizeX)) {
-					
+					oip.obstacleCreatePhase = ObstacleInProgress::end;
 				} else {
 					if (oip.obstacleCreatePhase == ObstacleInProgress::notInCreation) {
 						if (oip.Begin()) {
