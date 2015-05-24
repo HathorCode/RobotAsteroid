@@ -65,8 +65,8 @@ namespace robitRabit {
 		Str fileNames[] = {
 			Str("assets/main.vert"),
 			Str("assets/main.frag"),
-			Str("assets/hotsinglesinyourarea.tga"),
-			Str("assets/free_Viagra.tga"),
+			Str("assets/hotsinglesinyourarea2.tga"),
+			Str("assets/free_Viagra2.tga"),
 			Str("assets/KnifeSalesmanship.jpg.tga"),
 			Str("assets/RussianBridesToday.tga"),
 			Str("assets/eHarmonyPartner.tga"),

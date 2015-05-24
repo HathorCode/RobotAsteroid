@@ -23,12 +23,36 @@ namespace robitRabit {
 						case 'R':
 							controls.r = true;
 							break;
+						case 'W':
+							controls.w = true;
+							break;
+						case 'A':
+							controls.a = true;
+							break;
+						case 'S':
+							controls.s = true;
+							break;
+						case 'D':
+							controls.d = true;
+							break;
 					}
 					break;
 				} case WM_KEYUP:{
 					switch (wParam) {
 						case 'R':
 							controls.r = false;
+							break;
+						case 'W':
+							controls.w = false;
+							break;
+						case 'A':
+							controls.a = false;
+							break;
+						case 'S':
+							controls.s = false;
+							break;
+						case 'D':
+							controls.d = false;
 							break;
 					}
 					break;

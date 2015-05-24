@@ -8,6 +8,11 @@ namespace robitRabit {
 		bool lmouse;
 		bool rmouse;
 		bool r;
+
+		bool w;
+		bool a;
+		bool s;
+		bool d;
 		uint32 pxMousePosX,
 			   pxMousePosY;
 	} controls;

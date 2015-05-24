@@ -26,7 +26,7 @@ namespace robitRabit {
 		}
 
 		inline void SendData(char* dataToSend) {
-			WriteFile(dataHandle, dataToSend, 1, &bytesWritten, nullptr);
+			WriteFile(dataHandle, dataToSend, 6, &bytesWritten, nullptr);
 		}
 
 		/* Should be the only function used to send instructions to the Carduino. Input the array of characters from the generated path*/

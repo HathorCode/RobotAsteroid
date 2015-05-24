@@ -75,7 +75,6 @@ int __stdcall WinMain(HINSTANCE paramHInstance, HINSTANCE hPrevInstance, LPSTR l
 	}
 	gl.Init();
 	serial.Init();
-	serial.SendData("w"); // Remove in a sec
 	LoadFiles();
 	AppState();
 	//Never reached
