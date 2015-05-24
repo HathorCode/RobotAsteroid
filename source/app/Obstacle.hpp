@@ -59,6 +59,15 @@ namespace robitRabit {
 		}
 		return true;
 	}
+	bool Collide(Obstacle o0, Obstacle o1) {
+		if (o0.pxTLX < o1.pxBRX
+		 && o0.pxBRX > o1.pxTLX
+		 && o0.pxTLY < o1.pxBRY
+		 && o0.pxBRY > o1.pxTLY) {
+			return true;
+		}
+		return false;
+	}
 
 	//An Obstacle which is actively being created
 	struct ObstacleInProgress {
@@ -68,7 +77,6 @@ namespace robitRabit {
 		//inProgress = mouse up, creating
 		//end = mouse down, not creating.
 		enum { notInCreation, begin, inProgress, end } obstacleCreatePhase = notInCreation;
-		bool active;    //Are we creating an obstacle right now?
 		int32 pxAnchor0X,
 		      pxAnchor0Y,
     		  pxAnchor1X,
@@ -76,7 +84,6 @@ namespace robitRabit {
 		Obstacle actual;
 
 		bool Begin() {
-			assert(!active);
 			pxAnchor0X = controls.pxMousePosX;
 			pxAnchor0Y = controls.pxMousePosY;
 			for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
@@ -84,7 +91,6 @@ namespace robitRabit {
 					return false;
 				}
 			}
-			active = true;
 			return true;
 		}
 
@@ -103,6 +109,17 @@ namespace robitRabit {
 			      pxBRY;
 			GetCorners(pxTLX, pxTLY, pxBRX, pxBRY);
 			actual.Make(pxTLX, pxTLY, pxBRX, pxBRY);
+			for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
+				if (Collide(actual, obstacles[obsIndex])) {
+					//For now artificially end the obstacle creation
+					//TODO: Adjust the anchor point so the obstacles don't overlap allowing the user to place them against each other.
+					if (!controls.lmouse) {
+						obstacleCreatePhase = notInCreation;
+					} else {
+						obstacleCreatePhase = end;
+					}
+				}
+			}
 		}
 
 		//The anchors can be any two opposite corners, we want particular ones
@@ -124,7 +141,6 @@ namespace robitRabit {
 		}
 
 		void End() {
-			active = false;
 			obstacles.push_back(actual);
 		}
 	};
