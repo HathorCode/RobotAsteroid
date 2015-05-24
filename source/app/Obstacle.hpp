@@ -107,19 +107,19 @@ namespace robitRabit {
 
 		//The anchors can be any two opposite corners, we want particular ones
 		void GetCorners(int32& pxTLXOut, int32& pxTLYOut, int32& pxBRXOut, int32& pxBRYOut) {
-			if (pxAnchor0X > pxAnchor1X) {
+			if (pxAnchor0X < pxAnchor1X) {
 				pxTLXOut = pxAnchor0X;
 				pxBRXOut = pxAnchor1X;
 			} else {
-				pxBRXOut = pxAnchor1X;
-				pxTLXOut = pxAnchor0X;
+				pxTLXOut = pxAnchor1X;
+				pxBRXOut = pxAnchor0X;
 			}
-			if (pxAnchor0Y > pxAnchor1Y) {
+			if (pxAnchor0Y < pxAnchor1Y) {
 				pxTLYOut = pxAnchor0Y;
 				pxBRYOut = pxAnchor1Y;
 			} else {
-				pxBRYOut = pxAnchor1Y;
-				pxTLYOut = pxAnchor0Y;
+				pxTLYOut = pxAnchor1Y;
+				pxBRYOut = pxAnchor0Y;
 			}
 		}
 
