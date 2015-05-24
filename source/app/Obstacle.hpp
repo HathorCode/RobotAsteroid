@@ -114,23 +114,59 @@ namespace robitRabit {
 			if (pxAnchor1Y == pxAnchor0Y) {
 				++pxAnchor1Y;
 			}
+			
+			if (pxAnchor1X < (1.0 / 15.0f * win.pxWorkingWinSizeX)) {
+				pxAnchor1X = (1.0 / 15.0f * win.pxWorkingWinSizeX) + 1;
+			}
 			int32 pxTLX,   //Top left corner x coordinate
-			      pxTLY,
-			      pxBRX,   //Bottom right corner x coordinate
-			      pxBRY;
+				pxTLY,
+				pxBRX,   //Bottom right corner x coordinate
+				pxBRY;
 			GetCorners(pxTLX, pxTLY, pxBRX, pxBRY);
 			actual.Make(pxTLX, pxTLY, pxBRX, pxBRY);
-			if (pxAnchor1X < (1.0 / 15.0f * win.pxWorkingWinSizeX)) {
-				EndWithoutCreating();
-				return;
-			}
+			bool flagFound = false;
 			for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
-				if (Collide(actual, obstacles[obsIndex])) {
-					//For now artificially end the obstacle creation
-					//TODO: Adjust the anchor point so the obstacles don't overlap allowing the user to place them against each other.
+				Obstacle& o = obstacles[obsIndex];
+				if (Collide(actual, o)) {
 					EndWithoutCreating();
-					return;
+					/*flagFound = true;
+					uint32 left = 2000,
+						right = 2000,
+						top = 2000,
+						bottom = 2000;
+					if ((pxTLX > o.pxTLX)
+					 && (pxBRX > o.pxBRX)) {
+						left = o.pxBRX - pxTLX;
+					}
+					if ((pxTLX < o.pxTLX)
+					 && (pxBRX < o.pxBRX)) {
+						right = pxBRX - o.pxTLX;
+					}
+					if ((pxTLY > o.pxTLY)
+					 && (pxBRY > o.pxBRY)) {
+						top = o.pxBRY - pxTLY;
+					}
+					if ((pxTLY < o.pxTLY)
+					 &&	(pxBRY < o.pxBRY)) {
+						bottom = pxBRY - o.pxTLY;
+					}
+					if (left < bottom && left < top && left < right) {
+						pxTLX = o.pxBRX;
+					}
+					else if (right < bottom && right < top && right < left) {
+						pxTLX = o.pxTLX;
+					}
+					else if (top < right && top < left && top < bottom) {
+						pxTLY = o.pxBRY;
+					}
+					else if (bottom < right && bottom < left && bottom < top) {
+						pxTLY = o.pxTLY;
+					}*/
+
 				}
+			}
+			if (flagFound) {
+				actual.Make(pxTLX, pxTLY, pxBRX, pxBRY);
 			}
 		}
 
