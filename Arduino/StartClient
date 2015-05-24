@@ -1,0 +1,1 @@
+nc -l -p 5001 | mplayer -fps 31 -chache 2048 -
