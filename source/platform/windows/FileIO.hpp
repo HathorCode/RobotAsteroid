@@ -18,12 +18,12 @@
 namespace robitRabit {
 	struct File {
 		uint8* data;
-		uint64 size;
+		uint32 size;
 	};
 
 	FileError ReadFileData(const char* name, File& f) {
 		uint8** dataBuffer = &f.data;
-		uint64* sizeOut = &f.size;
+		uint32* sizeOut = &f.size;
 		HANDLE file = CreateFile(name,			//File name
 			GENERIC_READ,  //Read only
 			0,             //unused
