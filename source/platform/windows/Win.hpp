@@ -20,12 +20,16 @@ namespace robitRabit {
 			switch (msg) {
 				case WM_KEYDOWN:{
 					switch (wParam) {
-					
+						case 'R':
+							controls.r = true;
+							break;
 					}
 					break;
 				} case WM_KEYUP:{
 					switch (wParam) {
-					
+						case 'R':
+							controls.r = false;
+							break;
 					}
 					break;
 				} case WM_LBUTTONDOWN:{

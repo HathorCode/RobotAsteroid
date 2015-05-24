@@ -54,6 +54,10 @@ namespace robitRabit {
 			    || oip.obstacleCreatePhase == ObstacleInProgress::inProgress) {
 				oip.Update();
 			}
+
+			if (controls.r) {
+				obstacles.clear();
+			}
 		}
 		void Render(const float32 delta) {
 			camera.Draw(Drawable::FromSprite(assets.background));
