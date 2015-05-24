@@ -59,7 +59,7 @@ namespace robitRabit {
 				obstacles.clear();
 			}
 		}
-		void Render(const float32 delta) {
+		void Render() {
 			camera.Draw(Drawable::FromSprite(assets.background));
 			camera.Draw(assets.sidebar);
 			camera.Draw(assets.sidebarCarEnd);

@@ -42,9 +42,8 @@ namespace robitRabit {
 			obsSprite.transform.Translate(scrTransX, scrTransY / win.aspectRatio);
 		}
 	};
-	std::vector<Obstacle> obstacles;
 
-	bool Collide(uint32 pxPosX, uint32 pxPosY, Obstacle o) {
+	bool Collide(int32 pxPosX, int32 pxPosY, Obstacle o) {
 		if (pxPosX < o.pxTLX) {
 			return false;
 		}
@@ -61,12 +60,24 @@ namespace robitRabit {
 	}
 	bool Collide(Obstacle o0, Obstacle o1) {
 		if (o0.pxTLX < o1.pxBRX
-		 && o0.pxBRX > o1.pxTLX
-		 && o0.pxTLY < o1.pxBRY
-		 && o0.pxBRY > o1.pxTLY) {
+			&& o0.pxBRX > o1.pxTLX
+			&& o0.pxTLY < o1.pxBRY
+			&& o0.pxBRY > o1.pxTLY) {
 			return true;
 		}
 		return false;
+	}
+	
+	std::vector<Obstacle> obstacles;
+	void RemoveObstacle() {
+		int32 pxPosX = (int32)controls.pxMousePosX;
+		int32 pxPosY = (int32)controls.pxMousePosY;
+		for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
+			if (Collide(pxPosX, pxPosY, obstacles[obsIndex])) {
+				obstacles.erase(obstacles.begin() + obsIndex);
+				return;	//There can only be one obstacle at a given point
+			}
+		}
 	}
 
 	//An Obstacle which is actively being created

@@ -43,7 +43,7 @@ namespace robitRabit {
 
 			uint32 cmin = 0x20; //Minimum character glyph value to load
 			uint32 cmax = 0x81; //Maximum character glyph value to load
-			for (int charIterator = cmin; charIterator < cmax; charIterator++) {
+			for (uint32 charIterator = cmin; charIterator < cmax; charIterator++) {
 				if (FT_Load_Char(ftFont, charIterator, FT_LOAD_RENDER)) {
 					log.Write("[FreeType2] Character that should be acessible can't be loaded");
 				}
