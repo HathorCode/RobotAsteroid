@@ -69,6 +69,7 @@ namespace robitRabit {
 			Str("assets/free_Viagra.tga"),
 			Str("assets/KnifeSalesmanship.jpg.tga"),
 			Str("assets/RussianBridesToday.tga"),
+			Str("assets/eHarmonyPartner.tga"),
 		};
 		const uint32 countFiles = sizeof(fileNames) / sizeof(fileNames[0]);
 		File files[sizeof(fileNames) / sizeof(fileNames[0])];   //Because god forbid C++ allow using constants in array sizes.
@@ -97,12 +98,14 @@ namespace robitRabit {
 			true,
 			false,
 			false,
+			false,
 		};
 
 		float32 spriteScaleFactors[] = {
 			1920,
 			AssetManager::pxObsResX,
 			1,
+			2500,
 			2500,
 		};
 		uint32 countSprites = sizeof(spriteScaleFactors) / sizeof(spriteScaleFactors[0]);
@@ -112,6 +115,7 @@ namespace robitRabit {
 			&assets.obs,
 			&assets.sidebar.sprite, //Sidebar is a drawable not a sprite
 			&assets.carEnd,
+			&assets.car,
 		};
 		assert(countSprites == sizeof(sprites) / sizeof(sprites[0]));
 		assert(countSprites == sizeof(resInd) / sizeof(resInd[0]));
