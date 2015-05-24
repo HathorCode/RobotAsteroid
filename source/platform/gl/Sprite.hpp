@@ -24,6 +24,11 @@ namespace robitRabit {
 			renderer.vertexBuffer.AddSpriteVertices((GLuint)bytesBufferOffset,
 			                                        mWrldXLen, mWrldYLen);
 		}
+		void InitResIndependent(GLvoid* const initBytesBufferOffset) {
+			bytesBufferOffset = initBytesBufferOffset;
+			renderer.vertexBuffer.AddSpriteVertices((GLuint)bytesBufferOffset,
+												    1.0f, 1.0f/win.aspectRatio);
+		}
 	};
 
 }

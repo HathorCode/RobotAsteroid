@@ -25,28 +25,34 @@ namespace robitRabit {
 													   (1.0f/15.0f)-1.0f, 0.0f, 1.0f);
 		}
 		void Update() {
-			static bool lmouseWasReleased = false;
 			//Handle controls
 			if (controls.lmouse) {
-				if (!oip.active) {
+				if (oip.obstacleCreatePhase == ObstacleInProgress::notInCreation) {
 					oip.Begin();
-					lmouseWasReleased = false;
-				} else {
-					if (lmouseWasReleased) {
-						oip.End();
-					}
+					oip.obstacleCreatePhase = ObstacleInProgress::begin;
+				} else if (oip.obstacleCreatePhase == ObstacleInProgress::inProgress) {
+					oip.End();
+					oip.obstacleCreatePhase = ObstacleInProgress::end;
 				}
 			} else {
-				lmouseWasReleased = true;
+				if (oip.obstacleCreatePhase == ObstacleInProgress::begin) {
+					oip.obstacleCreatePhase = ObstacleInProgress::inProgress;
+				} else if (oip.obstacleCreatePhase == ObstacleInProgress::end) {
+					oip.obstacleCreatePhase = ObstacleInProgress::notInCreation;
+				}
 			}
-			if (oip.active) {
+			
+			//Update OIP
+			if (oip.obstacleCreatePhase == ObstacleInProgress::begin
+			    || oip.obstacleCreatePhase == ObstacleInProgress::inProgress) {
 				oip.Update();
 			}
 		}
 		void Render(const float32 delta) {
 			camera.Draw(Drawable::FromSprite(assets.background));
 			camera.Draw(assets.sidebar);
-			if (oip.active) {
+			if (oip.obstacleCreatePhase == ObstacleInProgress::begin
+			    || oip.obstacleCreatePhase == ObstacleInProgress::inProgress) {
 				camera.Draw(oip.actual.obsSprite);
 			}
 		}

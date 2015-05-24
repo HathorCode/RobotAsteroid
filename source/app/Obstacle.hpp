@@ -29,21 +29,28 @@ namespace robitRabit {
 			
 			int32 pxLenX = pxBRX - pxTLX;
 			int32 pxLenY = pxBRY - pxTLY;
-			float32 scrLenX = ((float32)pxLenX) / win.pxWorkingWinSizeX;
-			float32 scrLenY = ((float32)pxLenY) / win.pxWorkingWinSizeY;
-			int32 pxTransX = pxTLX + pxLenX/2;
-			int32 pxTransY = pxTLY + pxLenY/2;
-			float32 scrTransX = ((float32)pxTransX) / win.pxWorkingWinSizeX;
-			float32 scrTransY = ((float32)pxTransY) / win.pxWorkingWinSizeY;
+			float32 scrLenX = ((float32)pxLenX) / win.pxWorkingWinSizeX;//AssetManager::pxObsResX;//
+			float32 scrLenY = ((float32)pxLenY) / win.pxWorkingWinSizeY;//AssetManager::pxObsResY;//
+			int32 pxTransX = pxTLX + pxLenX / 2;
+			int32 pxTransY = pxTLY + pxLenY / 2;
+			float32 scrTransX = ((float32)pxTransX) /  win.pxWorkingWinSizeX;//AssetManager::pxObsResX;//
+			float32 scrTransY = ((float32)pxTransY) /  win.pxWorkingWinSizeY;//AssetManager::pxObsResY;//
 
 			obsSprite.transform.Translate(scrTransX, scrTransY);
 			obsSprite.transform.Scale(scrLenX, scrLenY);
+			//obsSprite.transform.SetIdentity();
 		}
 	};
 	std::vector<Obstacle> obstacles;
 
 	//An Obstacle which is actively being created
 	struct ObstacleInProgress {
+		//This is so we know how to handle mouse up and mouse down
+		//not in creation = mouse up, not creating.
+		//begin = mouse down, creating
+		//inProgress = mouse up, creating
+		//end = mouse down, not creating.
+		enum { notInCreation, begin, inProgress, end } obstacleCreatePhase = notInCreation;
 		bool active;    //Are we creating an obstacle right now?
 		int32 pxAnchor0X,
 		      pxAnchor0Y,

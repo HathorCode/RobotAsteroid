@@ -25,7 +25,7 @@ namespace robitRabit {
 
 		void Scale(float32 x, float32 y) {
 			matrix[0][0] *= x;
-			matrix[1][0] *= y;
+			matrix[1][1] *= y;
 		}
 
 		void SetIdentity() {
