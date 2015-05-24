@@ -79,14 +79,21 @@ namespace robitRabit {
 			assert(succeeded0 != 0);
 		}
 		bool Init() {
+			RECT adjust;
+			adjust.left = 0;
+			adjust.right = 1600;
+			adjust.top = 0;
+			adjust.bottom = 900;
+			BOOL worked = AdjustWindowRectEx(&adjust, WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX, FALSE, 0);
+			assert(worked);
 			handle = CreateWindowEx(0,
 			                        mainWndClass.lpszClassName,
 			                        "RobitRabit",
 									WS_OVERLAPPEDWINDOW ^ WS_THICKFRAME ^ WS_MAXIMIZEBOX,
 									0,
 									0,
-			                        1600,   //1650
-			                        900,    //990
+			                        adjust.right - adjust.left,   //1650
+			                        adjust.bottom - adjust.top,    //990
 			                        nullptr,
 			                        nullptr,
 			                        mainWndClass.hInstance,
@@ -95,8 +102,6 @@ namespace robitRabit {
 			GetClientRect(handle, &dim);
 			pxWorkingWinSizeX = dim.right - dim.left;
 			pxWorkingWinSizeY = dim.bottom - dim.top;
-			pxWorkingWinSizeX;
-			pxWorkingWinSizeY;
 			aspectRatio = ((float32)pxWorkingWinSizeX)/pxWorkingWinSizeY;
 			if (handle != nullptr) {
 				deviceContext = GetDC(handle);

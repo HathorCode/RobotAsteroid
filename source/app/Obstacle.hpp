@@ -26,19 +26,20 @@ namespace robitRabit {
 			pxBRY = initPXBRY;
 			obsSprite.sprite = assets.obs;
 			obsSprite.transform.SetIdentity();
-			
-			int32 pxLenX = pxBRX - pxTLX;
-			int32 pxLenY = pxBRY - pxTLY;
-			float32 scrLenX = ((float32)pxLenX) / win.pxWorkingWinSizeX;//AssetManager::pxObsResX;//
-			float32 scrLenY = ((float32)pxLenY) / win.pxWorkingWinSizeY;//AssetManager::pxObsResY;//
-			int32 pxTransX = pxTLX + pxLenX / 2;
-			int32 pxTransY = pxTLY + pxLenY / 2;
-			float32 scrTransX = ((float32)pxTransX) /  win.pxWorkingWinSizeX;//AssetManager::pxObsResX;//
-			float32 scrTransY = ((float32)pxTransY) /  win.pxWorkingWinSizeY;//AssetManager::pxObsResY;//
 
-			obsSprite.transform.Translate(scrTransX, scrTransY);
-			obsSprite.transform.Scale(scrLenX, scrLenY);
-			//obsSprite.transform.SetIdentity();
+			float32 pxLenX = (float32)(pxBRX - pxTLX);
+			float32 pxLenY = (float32)(pxBRY - pxTLY);
+			float32 scrLenX = pxLenX / win.pxWorkingWinSizeX;
+			float32 scrLenY = pxLenY / win.pxWorkingWinSizeY;
+			obsSprite.transform.Scale(abs(scrLenX), abs(scrLenY) / win.aspectRatio);
+
+			float32 pxSpriteCenterX = pxLenX / 2.0f + pxTLX;
+			float32 pxSpriteCenterY = pxLenY / 2.0f + pxTLY;
+			float32 scrSpriteCenterX = pxSpriteCenterX / win.pxWorkingWinSizeX;
+			float32 scrSpriteCenterY = pxSpriteCenterY / win.pxWorkingWinSizeY;
+			float32 scrTransX = scrSpriteCenterX - 0.5f;
+			float32 scrTransY = scrSpriteCenterY;
+			obsSprite.transform.Translate(scrTransX, 0.0f);
 		}
 	};
 	std::vector<Obstacle> obstacles;
