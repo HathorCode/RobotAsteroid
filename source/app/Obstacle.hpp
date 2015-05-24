@@ -97,9 +97,6 @@ namespace robitRabit {
 		bool Begin() {
 			pxAnchor0X = controls.pxMousePosX;
 			pxAnchor0Y = controls.pxMousePosY;
-			if (pxAnchor0X < (1.0 / 15.0f * win.pxWorkingWinSizeX)) {
-				return false;
-			}
 			for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
 				if (Collide(pxAnchor0X, pxAnchor0Y, obstacles[obsIndex])) {
 					return false;
