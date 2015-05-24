@@ -13,7 +13,7 @@ namespace robitRabit {
 		HANDLE dataHandle;
 
 		void Init() {
-			dataHandle = CreateFile("COM3", GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, NULL);
+			dataHandle = CreateFile("COM3", GENERIC_WRITE, 0, NULL, OPEN_EXISTING, 0, nullptr);
 			
 			dcb.DCBlength = sizeof(DCB);
 			dcb.BaudRate = CBR_9600;
@@ -26,7 +26,7 @@ namespace robitRabit {
 		}
 
 		inline void SendData(char* dataToSend) {
-			bool writtenFile = WriteFile(dataHandle, dataToSend, 1, &bytesWritten, NULL);
+			bool writtenFile = WriteFile(dataHandle, dataToSend, 1, &bytesWritten, nullptr);
 		}
 
 		/* Should be the only function used to send instructions to the Carduino. Input the array of characters from the generated path*/
