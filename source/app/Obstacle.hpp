@@ -97,6 +97,9 @@ namespace robitRabit {
 		bool Begin() {
 			pxAnchor0X = controls.pxMousePosX;
 			pxAnchor0Y = controls.pxMousePosY;
+			if (pxAnchor0X < (1.0 / 15.0f * win.pxWorkingWinSizeX)) {
+				return false;
+			}
 			for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
 				if (Collide(pxAnchor0X, pxAnchor0Y, obstacles[obsIndex])) {
 					return false;
@@ -120,15 +123,16 @@ namespace robitRabit {
 			      pxBRY;
 			GetCorners(pxTLX, pxTLY, pxBRX, pxBRY);
 			actual.Make(pxTLX, pxTLY, pxBRX, pxBRY);
+			if (pxAnchor1X < (1.0 / 15.0f * win.pxWorkingWinSizeX)) {
+				EndWithoutCreating();
+				return;
+			}
 			for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
 				if (Collide(actual, obstacles[obsIndex])) {
 					//For now artificially end the obstacle creation
 					//TODO: Adjust the anchor point so the obstacles don't overlap allowing the user to place them against each other.
-					if (!controls.lmouse) {
-						obstacleCreatePhase = notInCreation;
-					} else {
-						obstacleCreatePhase = end;
-					}
+					EndWithoutCreating();
+					return;
 				}
 			}
 		}
@@ -148,6 +152,14 @@ namespace robitRabit {
 			} else {
 				pxTLYOut = pxAnchor1Y;
 				pxBRYOut = pxAnchor0Y;
+			}
+		}
+
+		void EndWithoutCreating() {
+			if (!controls.lmouse) {
+				obstacleCreatePhase = notInCreation;
+			} else {
+				obstacleCreatePhase = end;
 			}
 		}
 
