@@ -48,6 +48,10 @@ namespace robitRabit {
 					oip.obstacleCreatePhase = ObstacleInProgress::notInCreation;
 				}
 			}
+
+			if (controls.rmouse) {
+				RemoveObstacle();
+			}
 			
 			//Update OIP
 			if (oip.obstacleCreatePhase == ObstacleInProgress::begin
