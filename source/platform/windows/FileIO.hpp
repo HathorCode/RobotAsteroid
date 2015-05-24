@@ -20,17 +20,17 @@ namespace robitRabit {
 		uint8* data;
 		uint64 size;
 	};
-	
+
 	FileError ReadFileData(const char* name, File& f) {
 		uint8** dataBuffer = &f.data;
 		uint64* sizeOut = &f.size;
 		HANDLE file = CreateFile(name,			//File name
-		                         GENERIC_READ,  //Read only
-		                         0,             //unused
-		                         nullptr,		//unused
-		                         OPEN_EXISTING, //Fail to open if file does not already exist
-		                         0,				//unused
-		                         nullptr);  	//unused
+			GENERIC_READ,  //Read only
+			0,             //unused
+			nullptr,		//unused
+			OPEN_EXISTING, //Fail to open if file does not already exist
+			0,				//unused
+			nullptr);  	//unused
 		if (file != INVALID_HANDLE_VALUE) {
 			*sizeOut = GetFileSize(file, nullptr);
 			if (*sizeOut != 0) {
@@ -68,6 +68,7 @@ namespace robitRabit {
 			Str("assets/hotsinglesinyourarea.tga"),
 			Str("assets/free_Viagra.tga"),
 			Str("assets/KnifeSalesmanship.jpg.tga"),
+			Str("assets/RussianBridesToday.tga"),
 		};
 		const uint32 countFiles = sizeof(fileNames) / sizeof(fileNames[0]);
 		File files[sizeof(fileNames) / sizeof(fileNames[0])];   //Because god forbid C++ allow using constants in array sizes.
@@ -75,7 +76,7 @@ namespace robitRabit {
 		//Read files from disk
 		for (uint32 fileIndex = 0; fileIndex < countFiles; ++fileIndex) {
 			if ((FileError)0 != (e = ReadFileData(fileNames[fileIndex].str,
-			                                      files[fileIndex]))) {
+				files[fileIndex]))) {
 				log.WriteFileError(e, fileNames[fileIndex]);
 				log.Write("[File IO] Crucial file could not be found.");
 				ExitProgram();
@@ -84,9 +85,9 @@ namespace robitRabit {
 
 		//Initialize various things from file data
 		if ((ShaderInitError)0 != mainShader.Init(files[0].size,
-			                                      (char*)files[0].data,
-			                                      files[1].size,
-			                                      (char*)files[1].data)) {
+			(char*)files[0].data,
+			files[1].size,
+			(char*)files[1].data)) {
 			log.Write("[Shaders] Shader compilation error, try redownloading game assets.");
 			ExitProgram();
 		}
@@ -94,13 +95,16 @@ namespace robitRabit {
 		bool resInd[] = {
 			false,
 			true,
-			false
+			false,
+			false,
 		};
-		
+
 		float32 spriteScaleFactors[] = {
 			1920,
 			AssetManager::pxObsResX,
-			1
+			1,
+			1920,
+
 		};
 		uint32 countSprites = sizeof(spriteScaleFactors) / sizeof(spriteScaleFactors[0]);
 		uint32 firstSprite = 2;
@@ -108,6 +112,7 @@ namespace robitRabit {
 			&assets.background,
 			&assets.obs,
 			&assets.sidebar.sprite, //Sidebar is a drawable not a sprite
+			&assets.carEnd,
 		};
 		assert(countSprites == sizeof(sprites) / sizeof(sprites[0]));
 		assert(countSprites == sizeof(resInd) / sizeof(resInd[0]));
@@ -124,14 +129,14 @@ namespace robitRabit {
 			}
 			if (!resInd[spriteZeroIndex]) {
 				sprite.Init(spriteScaleFactors[spriteZeroIndex],
-							tfr.pxLenX,
-							tfr.pxLenY,
-							(void*)(((uintptr)bytesPlayerSpriteBufferOffset) + bytesSpriteVerticesSize * spriteZeroIndex));
+					tfr.pxLenX,
+					tfr.pxLenY,
+					(void*)(((uintptr)bytesPlayerSpriteBufferOffset) + bytesSpriteVerticesSize * spriteZeroIndex));
 			} else {
 				sprite.InitResIndependent((void*)(((uintptr)bytesPlayerSpriteBufferOffset) + bytesSpriteVerticesSize * spriteZeroIndex));
 			}
 		}
-		
+
 		for (uint32 fileIndex = 0; fileIndex < countFiles; ++fileIndex) {
 			Free(files[fileIndex].data);
 		}
@@ -152,7 +157,7 @@ namespace robitRabit {
 		case FE_fileNotFound:
 			Write("File ");
 			Write(fileName);
-			Write(" not found.\n");				
+			Write(" not found.\n");
 			break;
 		case FE_readError:
 			Write("Read error in file ");
