@@ -91,9 +91,15 @@ namespace robitRabit {
 			ExitProgram();
 		}
 
+		bool resInd[] = {
+			false,
+			true,
+			false
+		};
+		
 		float32 spriteScaleFactors[] = {
 			1920,
-			432,
+			AssetManager::pxObsResX,
 			1
 		};
 		uint32 countSprites = sizeof(spriteScaleFactors) / sizeof(spriteScaleFactors[0]);
@@ -115,10 +121,14 @@ namespace robitRabit {
 				log.Write(" is invalid, try redownloading game assets.");
 				ExitProgram();
 			}
-			sprite.Init(spriteScaleFactors[spriteZeroIndex],
-			            tfr.pxLenX,
-			            tfr.pxLenY,
-			            (void*)(((uintptr)bytesPlayerSpriteBufferOffset) + bytesSpriteVerticesSize * spriteZeroIndex));
+			if (!resInd[spriteZeroIndex]) {
+				sprite.Init(spriteScaleFactors[spriteZeroIndex],
+							tfr.pxLenX,
+							tfr.pxLenY,
+							(void*)(((uintptr)bytesPlayerSpriteBufferOffset) + bytesSpriteVerticesSize * spriteZeroIndex));
+			} else {
+				sprite.InitResIndependent((void*)(((uintptr)bytesPlayerSpriteBufferOffset) + bytesSpriteVerticesSize * spriteZeroIndex));
+			}
 		}
 		
 		for (uint32 fileIndex = 0; fileIndex < countFiles; ++fileIndex) {
