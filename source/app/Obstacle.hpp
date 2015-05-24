@@ -2,8 +2,8 @@
 	List of obstacles
 */
 #pragma once
-#include <Global.hpp>
 #include "AssetManager.hpp"
+#include "Collision.hpp"
 
 #include <engine/renderer/Drawable.hpp>
 #include <engine/renderer/Camera.hpp>
@@ -15,26 +15,23 @@
 namespace robitRabit {
 	struct Obstacle {
 		Drawable obsSprite;
-		int32 pxTLX,   //Top left corner x coordinate
-			  pxTLY,
-			  pxBRX,   //Bottom right corner x coordinate
-			  pxBRY;
+		AABB aabb;
 		void Make(int32 initPXTLX, int32 initPXTLY, int32 initPXBRX, int32 initPXBRY) {
-			pxTLX = initPXTLX;
-			pxTLY = initPXTLY;
-			pxBRX = initPXBRX;
-			pxBRY = initPXBRY;
+			aabb.pxTLX = initPXTLX;
+			aabb.pxTLY = initPXTLY;
+			aabb.pxBRX = initPXBRX;
+			aabb.pxBRY = initPXBRY;
 			obsSprite.sprite = assets.obs;
 			obsSprite.transform.SetIdentity();
 
-			float32 pxLenX = (float32)(pxBRX - pxTLX);
-			float32 pxLenY = (float32)(pxBRY - pxTLY);
+			float32 pxLenX = (float32)(aabb.pxBRX - aabb.pxTLX);
+			float32 pxLenY = (float32)(aabb.pxBRY - aabb.pxTLY);
 			float32 scrLenX = pxLenX / win.pxWorkingWinSizeX;
 			float32 scrLenY = pxLenY / win.pxWorkingWinSizeY;
 			obsSprite.transform.Scale(abs(scrLenX), abs(scrLenY) / win.aspectRatio);
 
-			float32 pxSpriteCenterX = pxLenX / 2.0f + pxTLX;
-			float32 pxSpriteCenterY = pxLenY / 2.0f + pxTLY;
+			float32 pxSpriteCenterX = pxLenX / 2.0f + aabb.pxTLX;
+			float32 pxSpriteCenterY = pxLenY / 2.0f + aabb.pxTLY;
 			float32 pxTransX = pxSpriteCenterX - ((float32)win.pxWorkingWinSizeX) / 2.0f;
 			float32 pxTransY = ((float32)win.pxWorkingWinSizeY) / 2.0f - pxSpriteCenterY;
 			float32 scrTransX = pxTransX / (win.pxWorkingWinSizeX / 2.0f);
@@ -43,37 +40,12 @@ namespace robitRabit {
 		}
 	};
 
-	bool Collide(int32 pxPosX, int32 pxPosY, Obstacle o) {
-		if (pxPosX < o.pxTLX) {
-			return false;
-		}
-		if (pxPosY < o.pxTLY) {
-			return false;
-		}
-		if (pxPosX > o.pxBRX) {
-			return false;
-		}
-		if (pxPosY > o.pxBRY) {
-			return false;
-		}
-		return true;
-	}
-	bool Collide(Obstacle o0, Obstacle o1) {
-		if (o0.pxTLX < o1.pxBRX
-			&& o0.pxBRX > o1.pxTLX
-			&& o0.pxTLY < o1.pxBRY
-			&& o0.pxBRY > o1.pxTLY) {
-			return true;
-		}
-		return false;
-	}
-	
 	std::vector<Obstacle> obstacles;
 	void RemoveObstacle() {
 		int32 pxPosX = (int32)controls.pxMousePosX;
 		int32 pxPosY = (int32)controls.pxMousePosY;
 		for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
-			if (Collide(pxPosX, pxPosY, obstacles[obsIndex])) {
+			if (obstacles[obsIndex].aabb.Collide(pxPosX, pxPosY)) {
 				obstacles.erase(obstacles.begin() + obsIndex);
 				return;	//There can only be one obstacle at a given point
 			}
@@ -98,7 +70,7 @@ namespace robitRabit {
 			pxAnchor0X = controls.pxMousePosX;
 			pxAnchor0Y = controls.pxMousePosY;
 			for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
-				if (Collide(pxAnchor0X, pxAnchor0Y, obstacles[obsIndex])) {
+				if (obstacles[obsIndex].aabb.Collide(pxAnchor0X, pxAnchor0Y)) {
 					return false;
 				}
 			}
@@ -127,42 +99,8 @@ namespace robitRabit {
 			bool flagFound = false;
 			for (uint32 obsIndex = 0; obsIndex < obstacles.size(); ++obsIndex) {
 				Obstacle& o = obstacles[obsIndex];
-				if (Collide(actual, o)) {
+				if (actual.aabb.Collide(o.aabb)) {
 					EndWithoutCreating();
-					/*flagFound = true;
-					uint32 left = 2000,
-						right = 2000,
-						top = 2000,
-						bottom = 2000;
-					if ((pxTLX > o.pxTLX)
-					 && (pxBRX > o.pxBRX)) {
-						left = o.pxBRX - pxTLX;
-					}
-					if ((pxTLX < o.pxTLX)
-					 && (pxBRX < o.pxBRX)) {
-						right = pxBRX - o.pxTLX;
-					}
-					if ((pxTLY > o.pxTLY)
-					 && (pxBRY > o.pxBRY)) {
-						top = o.pxBRY - pxTLY;
-					}
-					if ((pxTLY < o.pxTLY)
-					 &&	(pxBRY < o.pxBRY)) {
-						bottom = pxBRY - o.pxTLY;
-					}
-					if (left < bottom && left < top && left < right) {
-						pxTLX = o.pxBRX;
-					}
-					else if (right < bottom && right < top && right < left) {
-						pxTLX = o.pxTLX;
-					}
-					else if (top < right && top < left && top < bottom) {
-						pxTLY = o.pxBRY;
-					}
-					else if (bottom < right && bottom < left && bottom < top) {
-						pxTLY = o.pxTLY;
-					}*/
-
 				}
 			}
 			if (flagFound) {
