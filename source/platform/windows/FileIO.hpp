@@ -109,7 +109,8 @@ namespace robitRabit {
 			&assets.obs,
 			&assets.sidebar.sprite, //Sidebar is a drawable not a sprite
 		};
-		assert(countSprites == sizeof(sprites)/sizeof(sprites[0]));
+		assert(countSprites == sizeof(sprites) / sizeof(sprites[0]));
+		assert(countSprites == sizeof(resInd) / sizeof(resInd[0]));
 		for (uint32 spriteIndex = firstSprite; spriteIndex < countSprites + firstSprite; ++spriteIndex) {
 			auto spriteZeroIndex = spriteIndex - firstSprite;
 			Sprite& sprite = *sprites[spriteZeroIndex];
