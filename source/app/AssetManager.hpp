@@ -11,6 +11,9 @@ namespace robitRabit {
 		Sprite background;
 		Sprite obs;
 		Drawable sidebar;
+		Drawable sidebarCar;
+		Drawable sidebarCarEnd;
+		Sprite car;
 		Sprite carEnd;
 
 		static const uint32 pxObsResX = 432;

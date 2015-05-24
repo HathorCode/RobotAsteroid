@@ -103,8 +103,7 @@ namespace robitRabit {
 			1920,
 			AssetManager::pxObsResX,
 			1,
-			1920,
-
+			2500,
 		};
 		uint32 countSprites = sizeof(spriteScaleFactors) / sizeof(spriteScaleFactors[0]);
 		uint32 firstSprite = 2;

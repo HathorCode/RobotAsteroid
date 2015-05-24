@@ -20,9 +20,13 @@ namespace robitRabit {
 			camera.Init(glm::mat3(1.0f/camera.mScale, 0.0f, 0.0f,
 			                      0.0f, 1.0f/camera.mScale * win.aspectRatio, 0.0f,
 			                      0.0f, 0.0f, 1.0f));
-			assets.sidebar.transform.matrix = glm::mat3(1.0f/15.0f, 0.0, 0.0f,
+			assets.sidebar.transform.matrix = glm::mat3(1.0f/15.0f, 0.0f, 0.0f,
 														0.0f, 1.0f, 0.0f,
 													   (1.0f/15.0f)-1.0f, 0.0f, 1.0f);
+			assets.sidebarCarEnd.sprite = assets.carEnd;
+			assets.sidebarCarEnd.transform.matrix = glm::mat3(1.0f, 0.0f, 0.0f,
+				                                              0.0f, 1.0f, 0.0f,
+															  (1.0f/16.0f)-1.0f, 0.45f, 1.0f);
 		}
 		void Update() {
 			//Handle controls
@@ -51,6 +55,7 @@ namespace robitRabit {
 		void Render(const float32 delta) {
 			camera.Draw(Drawable::FromSprite(assets.background));
 			camera.Draw(assets.sidebar);
+			camera.Draw(assets.sidebarCarEnd);
 			if (oip.obstacleCreatePhase == ObstacleInProgress::begin
 			    || oip.obstacleCreatePhase == ObstacleInProgress::inProgress) {
 				camera.Draw(oip.actual.obsSprite);
